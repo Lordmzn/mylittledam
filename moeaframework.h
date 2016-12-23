@@ -1,18 +1,18 @@
-/* Copyright 2009-2012 David Hadka
- * 
+/* Copyright 2009-2016 David Hadka
+ *
  * This file is part of the MOEA Framework.
- * 
+ *
  * The MOEA Framework is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or (at your 
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at your
  * option) any later version.
- * 
- * The MOEA Framework is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public 
+ *
+ * The MOEA Framework is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
  * License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License 
+ *
+ * You should have received a copy of the GNU Lesser General Public License
  * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -21,6 +21,10 @@
 
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+#ifdef _POSIX_SOURCE
+#define MOEA_SOCKETS
 #endif
 
 /**
@@ -38,6 +42,7 @@ typedef enum MOEA_Status {
   MOEA_MALLOC_ERROR,
   MOEA_NULL_POINTER_ERROR,
   MOEA_SOCKET_ERROR,
+  MOEA_IO_ERROR
 } MOEA_Status;
 
 /**
@@ -73,7 +78,7 @@ const char* MOEA_Status_message(const MOEA_Status);
  */
 MOEA_Status MOEA_Init(const int, const int);
 
-#ifdef _POSIX_SOURCE
+#ifdef MOEA_SOCKETS
 /**
  * Initializes the MOEA Framework to support a problem with the specified
  * number of objectives and constraints.  This initializer establishes a
